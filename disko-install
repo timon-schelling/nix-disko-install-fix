@@ -240,6 +240,9 @@ main() {
     NIX_STATE_DIR=${mountPoint}/nix/var/nix nix-store --load-db < "${closure_info}/registration"
   fi
 
+  # /etc/machine-id needs to exist for systemd-boot install
+  dbus-uuidgen "--ensure=$mountPoint/etc/machine-id"
+
   nixos-install --no-channel-copy --no-root-password --system "$nixos_system" --root "$mountPoint"
 }
 
